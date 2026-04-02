@@ -51,6 +51,14 @@ jobs:
           tags: |
             ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:TELEMETRY-processor-latest
           platforms: linux/amd64
+          build-args: |
+            NODE_ENV=${{ vars.NODE_ENV || 'production' }}
+            PORT=${{ vars.PORT || '3000' }}
+            LOG_LEVEL=${{ vars.LOG_LEVEL || 'info' }}
+            BATCH_SIZE=${{ vars.BATCH_SIZE || '500' }}
+            CRON_SCHEDULE=${{ vars.CRON_SCHEDULE || '*/5 * * * *' }}
+            LEADERBOARD_REFRESH_SCHEDULE=${{ vars.LEADERBOARD_REFRESH_SCHEDULE || '0 1 * * *' }}
+            MV_REFRESH_SCHEDULE=${{ vars.MV_REFRESH_SCHEDULE || '*/15 * * * *' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
